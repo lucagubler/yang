@@ -13,12 +13,20 @@ headers = {
     'Authorization': "Basic aW5zOmluc0BsYWI=",
     }
 
-# Remove VRF from BGP
-print('\n\n===============  Delete VRF Config  ===============\n\n')
-url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/ipv4=unicast/vrf=myVRF"
+with open('devices_list.txt') as f:
+    devices = f.read().splitlines()
 
-response = requests.request("DELETE", url, headers=headers, verify=False)
+for device in devices:
+    print('Starting configuration for ' + device)
+    # Remove VRF from BGP
+    print('\n\n===============  Delete VRF Config  ===============\n\n')
+    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/ipv4=unicast/vrf=myVRF"
 
-# Delete VRF itself
-url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/vrf/definition=myVRF"
-response = requests.request("DELETE", url, headers=headers, verify=False)
+    response = requests.request("DELETE", url, headers=headers, verify=False)
+    print('Response OK if there is no output below this line: \n' + response.text)
+
+    # Delete VRF itself
+    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/vrf/definition=myVRF"
+
+    response = requests.request("DELETE", url, headers=headers, verify=False)
+    print('Response OK if there is no output below this line: \n' + response.text)

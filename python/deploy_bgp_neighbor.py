@@ -13,12 +13,19 @@ headers = {
     'Authorization': "Basic aW5zOmluc0BsYWI=",
     }
 
-print('\n\n===============  Deply BGP Neighbor  ==============\n\n')
+with open('devices_list.txt') as f:
+    devices = f.read().splitlines()
 
-url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000"
+for device in devices:
+    print('Starting configuration for ' + device)
+    print('\n\n===============  Deply BGP Neighbor  ==============\n\n')
+
+    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000"
 
 
 
-with open('uc2_vrf_conf.json') as jsonfile:
-    payload = json.load(jsonfile)
-response = requests.request("PATCH", url, json=payload, headers=headers, verify=False)
+    with open('uc2_vrf_conf.json') as jsonfile:
+        payload = json.load(jsonfile)
+    response = requests.request("PATCH", url, json=payload, headers=headers, verify=False)
+
+    print('Response OK if there is no output below this line: \n' + response.text)
