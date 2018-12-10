@@ -18,3 +18,16 @@ router bgp 65000
 no vrf definition myVrf
 router bgp 65000
  no address-family ipv4 vrf myVrf
+
+! UC4 New BGP Neighborship
+router bgp 65000
+ neighbor 10.5.5.5 remote -as 65000
+ neighbor 10.5.5.5 update-source Loopback0
+ address-family vpnv4
+  neighbor 10.5.5.5 send-community extended
+  neighbor 10.5.5.5 activate
+ exit-address-family
+ address-family vpnv6
+  neighbor 10.5.5.5 send-community extended
+  neighbor 10.5.5.5 activate
+ exit-address-family
