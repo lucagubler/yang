@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import json
 
 os.system('python list_vrf.py')
 os.system('python deploy_service.py')
