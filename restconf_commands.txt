@@ -1,2 +1,24 @@
 # UC1 List all services configured on Leaf Switch
-/restconf/data/Cisco-IOS-XE-native:native/vrf
+GET /restconf/data/Cisco-IOS-XE-native:native/vrf
+
+# UC2 Add new VRF
+PATCH /restconf/data/Cisco-IOS-XE-native:native/vrf
+ File: uc_2_vrf_conf.json
+ Content-Type: application/json-yang+data
+ Accept: applicatoin/json-yang+data
+
+PATCH /restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000
+ File: uc_2_bgp_conf.json
+ Content-Type: application/json-yang+data
+ Accept: applicatoin/json-yang+data
+
+(Optional with adding a interface is not ready yet)
+
+# UC3 Delete service
+DELETE /restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/ipv4=unicast/vrf=myVRF
+
+DELETE /restconf/data/Cisco-IOS-XE-native:native/vrf/definition=myVRF
+ Content-Type: application/json-yang+data
+ Accept: applicatoin/json-yang+data
+
+# UC4 New BGP Neighborship
