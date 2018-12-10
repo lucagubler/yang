@@ -1,0 +1,2 @@
+# UC1 List all services configured on Leaf Switch
+/restconf/data/Cisco-IOS-XE-native:native/vrf
