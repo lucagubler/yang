@@ -18,7 +18,10 @@ PATCH /restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000
 DELETE /restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/ipv4=unicast/vrf=myVRF
 
 DELETE /restconf/data/Cisco-IOS-XE-native:native/vrf/definition=myVRF
- Content-Type: application/json-yang+data
- Accept: applicatoin/json-yang+data
+
 
 # UC4 New BGP Neighborship
+PATCH /restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000
+ File: uc4_bgp_neighborship.json
+ Content-Type: application/json-yang+data
+ Accept: applicatoin/json-yang+data
