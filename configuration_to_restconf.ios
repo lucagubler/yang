@@ -1,0 +1,20 @@
+! UC2 New service
+vrf definition myVrf
+ description my awesome vrf
+ rd 10.9.9.9:123
+ route-target export 456:1
+ route-target import 456:1
+!
+address family ipv4
+ exit-address-family
+!
+router bgp 65000
+ address-family ipv4 vrf myVrf
+  redistribute connected
+ exit-address-family
+
+
+! UC3 Delete Service
+no vrf definition myVrf
+router bgp 65000
+ no address-family ipv4 vrf myVrf
