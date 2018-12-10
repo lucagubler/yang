@@ -4,26 +4,21 @@
 
 import json
 import requests
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+import common_data
 
-headers = {
-    'Accept': "application/yang-data+json",
-    'Content-Type': "application/yang-data+json",
-    'Authorization': "Basic aW5zOmluc0BsYWI=",
-    }
+
 
 with open('devices_list.txt') as f:
     devices = f.read().splitlines()
 
 for device in devices:
-    print('Starting configuration for ' + device)
+    print('Reading configuration for ' + device)
     url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/vrf"
 
-
-    response = requests.get(url, headers=headers, verify=False)
+    response = requests.get(url, headers=common_data.headers, verify=False)
+    common_data.printApiResponse(response)
     data = response.json()
-    print('\n\n================  Print VRF Config  ================\n\n')
+    print('\n================  Print VRF Config  ================\n')
     print('#\tVRF Name\n---------------------------')
     i = 1
     for value in data['Cisco-IOS-XE-native:vrf']['definition']:
@@ -31,3 +26,5 @@ for device in devices:
         
         print(str(i) + '\t' + name)
         i = i + 1
+    
+    print('\n')
