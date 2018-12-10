@@ -14,23 +14,24 @@ headers = {
     }
 
 # First deploy VRF
+print('\n\n===============  Deploy VRF Config  ===============\n\n')
+
 url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/vrf"
 
 with open('uc2_vrf_conf.json') as jsonfile:
     payload = json.load(jsonfile)
+response = requests.request("PATCH", url, json=payload, headers=headers, verify=False)
 
-response = requests.request("PATCH", url, data=payload, headers=headers, verify=False)
-
-print('\n\n===============  Deploy VRF Config  ===============\n\n')
-print(response.text)
+print('Response OK if there is no output below this line: \n' + response.text)
 
 # Secondly deploy BGP configuration for VRF
+print('\n\n===============  Deploy BGP Config  ===============\n\n')
+
 url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000"
 
 with open('uc2_bgp_conf.json') as jsonfile:
     payload = json.load(jsonfile)
 
-response = requests.request("PATCH", url, data=payload, headers=headers, verify=False)
+response = requests.request("PATCH", url, json=payload, headers=headers, verify=False)
 
-print('\n\n===============  Deploy BGP Config  ===============\n\n')
-print(response.text)
+print('Response OK if there is no output below this line: \n' + response.text)

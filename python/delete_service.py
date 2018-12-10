@@ -14,10 +14,10 @@ headers = {
     }
 
 # Remove VRF from BGP
+print('\n\n===============  Delete VRF Config  ===============\n\n')
 url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/ipv4=unicast/vrf=myVRF"
 
 response = requests.request("DELETE", url, headers=headers, verify=False)
-data = response.json()
 
 # Delete VRF itself
 url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/vrf/definition=myVRF"
