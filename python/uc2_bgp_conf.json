@@ -1,24 +1,15 @@
 {
-    "Cisco-IOS-XE-bgp:bgp": [
-        {
-            "address-family": {
-                "with-vrf": {
-                    "ipv4": [
-                        {
-                            "vrf": [
-                                {
-                                    "name": "myVRF",
-                                    "ipv4-unicast": {
-                                        "redistribute": {
-                                            "connected": {}
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ]
+    "Cisco-IOS-XE-bgp:ipv4": {
+        "af-name": "unicast",
+        "vrf": [
+            {
+                "name": "myVRF",
+                "ipv4-unicast": {
+                    "redistribute": {
+                        "connected": {}
+                    }
                 }
             }
-        }
-    ]
+        ]
+    }
 }
