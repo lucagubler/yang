@@ -26,7 +26,7 @@ for device in devices:
 
     print('\n===============  Add VPNv* Configuration  ==============\n')
     # First create the vpnv4 configuration
-    url = "https://" + device + "restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/no-vrf/vpnv4=unicast/vpnv4-unicast/neighbor"
+    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/no-vrf/vpnv4=unicast/vpnv4-unicast/neighbor"
 
     with open('uc4_bgp_neighborship_vpn.json') as jsonfile:
         payload = json.load(jsonfile)
