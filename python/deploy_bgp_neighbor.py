@@ -18,7 +18,6 @@ for device in devices:
 
     with open('uc4_bgp_neighborship.json') as jsonfile:
         payload = json.load(jsonfile)
-    print(payload)
     time.sleep(7)
     response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
 
@@ -35,6 +34,8 @@ for device in devices:
 
     common_data.printApiResponse(response)
     # Repeat the same json source for vpnv6 configuration
-    url = "https://" + device + "restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/no-vrf/vpnv4=unicast/vpnv6-unicast/neighbor"
+    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/no-vrf/vpnv6=unicast/vpnv6-unicast/neighbor"
     time.sleep(7)
     response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
+    
+    common_data.printApiResponse(response)
