@@ -9,10 +9,10 @@ import common_data
 import sys
 import getopt
 
+name = ''
+
 with open('devices_list.txt') as f:
     devices = f.read().splitlines()
-
-name = ''
 
 try:
     opts, args = getopt.getopt(argv, "hn:", ["name="])
