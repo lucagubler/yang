@@ -1,0 +1,13 @@
+{
+    "Cisco-IOS-XE-bgp:neighbor": [
+        {
+            "id": "10.5.5.5",
+            "activate": [
+                null
+            ],
+            "send-community": {
+                "send-community-where": "extended"
+            }
+        }
+    ]
+}

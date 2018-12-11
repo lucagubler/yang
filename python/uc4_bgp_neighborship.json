@@ -1,53 +1,11 @@
 {
-    "Cisco-IOS-XE-bgp:bgp": {
-        "neighbor": [
-            {
-                "id": "10.5.5.5",
-                "remote-as": 65000,
-                "update-source": {
-                    "Loopback": 0
-                }
-            }
-        ],
-        "address-family": {
-            "no-vrf": {
-                "vpnv4": [
-                    {
-                        "af-name": "unicast",
-                        "vpnv4-unicast": {
-                            "neighbor": [
-                                {
-                                    "id": "10.5.5.5",
-                                    "activate": [
-                                        null
-                                    ],
-                                    "send-community": {
-                                        "send-community-where": "extended"
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "vpnv6": [
-                    {
-                        "af-name": "unicast",
-                        "vpnv6-unicast": {
-                            "neighbor": [
-                                {
-                                    "id": "10.5.5.5",
-                                    "activate": [
-                                        null
-                                    ],
-                                    "send-community": {
-                                        "send-community-where": "extended"
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ]
+    "Cisco-IOS-XE-bgp:neighbor": [
+        {
+            "id": "10.5.5.5",
+            "remote-as": 65000,
+            "update-source": {
+                "Loopback": 0
             }
         }
-    }
+    ]
 }
