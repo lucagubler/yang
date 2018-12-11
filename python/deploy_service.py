@@ -28,7 +28,8 @@ for device in devices:
     # Secondly deploy BGP configuration for VRF
     print('\n===============  Deploy BGP Config  ===============\n')
 
-    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/ipv4=unicast"
+    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/" \
+                                "ipv4=unicast"
 
     with open('uc2_bgp_conf.json') as jsonfile:
         payload = json.load(jsonfile)

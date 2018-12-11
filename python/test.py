@@ -14,7 +14,8 @@ headers = {
     'Authorization': "Basic aW5zOmluc0BsYWI=",
 }
 
-url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/ipv4=unicast"
+url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/" \
+      "with-vrf/ipv4=unicast"
 
 with open('uc2_bgp_conf.json') as jsonfile:
     payload = json.load(jsonfile)
