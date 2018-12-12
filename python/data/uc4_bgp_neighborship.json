@@ -1,8 +1,8 @@
 {
     "Cisco-IOS-XE-bgp:neighbor": [
         {
-            "id": "10.5.5.5",
-            "remote-as": 65000,
+            "id": "empty",
+            "remote-as": 0,
             "update-source": {
                 "Loopback": 0
             }
