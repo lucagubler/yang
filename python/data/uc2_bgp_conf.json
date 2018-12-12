@@ -3,7 +3,7 @@
         "af-name": "unicast",
         "vrf": [
             {
-                "name": "myVRF", //TODO argument name
+                "name": "name",
                 "ipv4-unicast": {
                     "redistribute": {
                         "connected": {}
