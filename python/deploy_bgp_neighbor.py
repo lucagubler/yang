@@ -6,12 +6,25 @@ import requests, json, time, sys
 import common_data
 
 # Read arguments
-if(len(sys.argv) < 3):
-    print('Usage: deploy_bgp_neighbor.py <router-id> <loopback-interface> <remote-asn>')
-    quit(2)
-r_id = sys.argv[1]
-lo_int = sys.argv[2]
-r_as = sys.argv[3]
+r_id = ''
+lo_int = ''
+r_as = ''
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "hi:l:r:", ["r_id=", "lo_int=", "r_as="])
+except getopt.GetoptError:
+    print 'usage: delete_service.py -i <r_id> -l <lo_int> -r <r_as>'
+    sys.exit(2)
+for opt, arg in opts:
+    if opt == '-h':
+        print 'usage: delete_service.py -n <name>'
+        sys.exit()
+    elif opt in ("-i", "--r_id"):
+        r_id = arg
+    elif opt in ("-l", "--lo_int"):
+        lo_int = arg
+    elif opt in ("-r", "--r_as"):
+        r_as = arg
 
 # Begin configuration for each device read in devices_list
 with open('data/devices_list.txt') as f:

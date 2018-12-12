@@ -10,7 +10,7 @@ import getopt
 name = ''
 
 try:
-    opts, args = getopt.getopt(argv, "hn:", ["name="])
+    opts, args = getopt.getopt(sys.argv[1:], "hn:", ["name="])
 except getopt.GetoptError:
     print 'usage: delete_service.py -n <name>'
     sys.exit(2)
