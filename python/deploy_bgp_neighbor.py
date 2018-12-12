@@ -27,10 +27,6 @@ for opt, arg in opts:
     elif opt in ("-r", "--r_as"):
         r_as = arg
 
-print(r_id)
-print(lo_int)
-print(r_as)
-
 # Begin configuration for each device read in devices_list
 with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()
@@ -45,10 +41,12 @@ for device in devices:
     # Read template json
     with open('data/uc4_bgp_neighborship.json') as jsonfile:
         payload = json.load(jsonfile)
+
     # Edit values for valid configuration
     payload['Cisco-IOS-XE-bgp:neighbor'][0]['id'] = r_id
     payload['Cisco-IOS-XE-bgp:neighbor'][0]['update-source']['Loopback'] = lo_int
     payload['Cisco-IOS-XE-bgp:neighbor'][0]['remote-as'] = r_as
+
     time.sleep(7)
     response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
 
@@ -61,6 +59,9 @@ for device in devices:
 
     with open('data/uc4_bgp_neighborship_vpn.json') as jsonfile:
         payload = json.load(jsonfile)
+
+    payload['Cisco-IOS-XE-bgp:neighbor'][0]['id'] = r_id
+
     time.sleep(7)
     response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
 
