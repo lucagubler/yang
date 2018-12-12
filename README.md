@@ -15,16 +15,31 @@ So kann das Script ausgeführt werden:
 python list_vrf.py
 ```
 
-### Use Case 2 - Deploy a new service on a leaf switch
+## Use Case 2 - Deploy a new service on a leaf switch
 
-#### Deploy Service
+### Script ausführen
 So kann das Script ausgeführt werden:
 ```
 python deploy_service.py -r <rd> -a <asn-ip> -d <description>
 ```
 
-#### Deploy BGP neighbor
+## Use Case 3 - Remove a service from a leaf switch
+
+### Script ausführen
 So kann das Script ausgeführt werden:
 ```
-python deploy_service.py -r <rd> -a <asn-ip> -d <description>
+python delete_service.py -n <name>
 ```
+
+## Use Case 4 - Deploy a BGP neighborship between a leaf and spine switch
+
+### Script ausführen
+So kann das Script ausgeführt werden:
+```
+python deploy_bgp_neighbor.py -i <r_id> -l <lo_int> -r <r_as>
+```
+
+## Authors
+
+* **Jerome Gygax** - *Initial work* - [gyjch](https://github.com/gyjch)
+* **Luca Gubler** - *Helped Jerome* - [lucagubler](https://github.com/lucagubler)
