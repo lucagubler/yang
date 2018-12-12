@@ -14,11 +14,11 @@ r_as = ''
 try:
     opts, args = getopt.getopt(sys.argv[1:], "hi:l:r:", ["r_id=", "lo_int=", "r_as="])
 except getopt.GetoptError:
-    print 'usage: delete_service.py -i <r_id> -l <lo_int> -r <r_as>'
+    print 'usage: deploy_bgp_neighbor.py -i <r_id> -l <lo_int> -r <r_as>'
     sys.exit(2)
 for opt, arg in opts:
     if opt == '-h':
-        print 'usage: delete_service.py -i <r_id> -l <lo_int> -r <r_as>'
+        print 'usage: deploy_bgp_neighbor.py -i <r_id> -l <lo_int> -r <r_as>'
         sys.exit()
     elif opt in ("-i", "--r_id"):
         r_id = arg
