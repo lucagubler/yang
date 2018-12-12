@@ -2,24 +2,24 @@
     "Cisco-IOS-XE-native:vrf": {
         "definition": [
             {
-                "name": "myVRF", //schon mitgegeben
-                "rd": "10.9.9.9:123", //TODO
+                "name": "name",
+                "rd": "rd",
                 "address-family": {
                     "ipv4": {}
                 },
                 "route-target": {
                     "export": [
                         {
-                            "asn-ip": "456:1" //TODO
+                            "asn-ip": "asn_ip"
                         }
                     ],
                     "import": [
                         {
-                            "asn-ip": "456:1"
+                            "asn-ip": "asn_ip"
                         }
                     ]
                 },
-                "description": "my awesome vrf" //TODO description
+                "description": "description"
             }
         ]
     }

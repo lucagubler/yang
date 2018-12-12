@@ -7,19 +7,22 @@ import common_data
 import getopt
 
 # Read arguments
+name= ''
 rd = ''
 asn_ip = ''
 description = ''
 
 try:
-    opts, args = getopt.getopt(argv, "hr:a:d:", ["rd=", "asn_ip=", "description="])
+    opts, args = getopt.getopt(sys.argv[1:], "hn:r:a:d:", ["name=", "rd=", "asn_ip=", "description="])
 except getopt.GetoptError:
-    print 'usage: deploy_service.py -r <rd> -a <asn-ip> -d <description>'
+    print 'usage: deploy_service.py -n <vrf-name> -r <rd> -a <asn-ip> -d <description>'
     sys.exit(2)
 for opt, arg in opts:
     if opt == '-h':
-        print 'usage: deploy_service.py -r <rd> -a <asn-ip> -d <description>'
+        print 'usage: deploy_service.py -n <vrf-name> -r <rd> -a <asn-ip> -d <description>'
         sys.exit()
+    elif opt in ("-n", "--name"):
+        name = arg
     elif opt in ("-r", "--rd"):
         rd = arg
     elif opt in ("-a", "--asn_ip"):
@@ -27,7 +30,7 @@ for opt, arg in opts:
     elif opt in ("-d", "--description"):
         description = arg
 
-with open('devices_list.txt') as f:
+with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()
 
 for device in devices:
@@ -37,8 +40,14 @@ for device in devices:
     
     url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/vrf"
 
-    with open('uc2_vrf_conf.json') as jsonfile:
+    with open('data/uc2_vrf_conf.json') as jsonfile:
         payload = json.load(jsonfile)
+
+    payload['Cisco-IOS-XE-native:vrf']['definition'][0]['name'] = name
+    payload['Cisco-IOS-XE-native:vrf']['definition'][0]['rd'] = rd
+    payload['Cisco-IOS-XE-native:vrf']['definition'][0]['description'] = description
+    payload['Cisco-IOS-XE-native:vrf']['definition'][0]['route-target']['export'][0]['asn-ip'] = asn_ip
+    payload['Cisco-IOS-XE-native:vrf']['definition'][0]['route-target']['import'][0]['asn-ip'] = asn_ip
 
     time.sleep(7)
     response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
@@ -51,8 +60,9 @@ for device in devices:
     url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/" \
                                 "ipv4=unicast"
 
-    with open('uc2_bgp_conf.json') as jsonfile:
+    with open('data/uc2_bgp_conf.json') as jsonfile:
         payload = json.load(jsonfile)
+    payload['Cisco-IOS-XE-bgp:ipv4']['vrf'][0]['name'] = name
 
     time.sleep(7)
     response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
