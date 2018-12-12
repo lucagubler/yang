@@ -7,7 +7,7 @@ import common_data
 
 
 
-with open('devices_list.txt') as f:
+with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()
 
 for device in devices:

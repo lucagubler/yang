@@ -21,7 +21,7 @@ for opt, arg in opts:
     elif opt in ("-n", "--name"):
         name = arg
 
-with open('devices_list.txt') as f:
+with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()
 
 for device in devices:
