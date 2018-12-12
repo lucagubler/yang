@@ -2,17 +2,12 @@
 
 # File is part of task UC3
 
-import json
-import requests
-import time
+import requests, json, time, sys
 import common_data
-import sys
 import getopt
 
+# Read arguments
 name = ''
-
-with open('devices_list.txt') as f:
-    devices = f.read().splitlines()
 
 try:
     opts, args = getopt.getopt(argv, "hn:", ["name="])
@@ -25,6 +20,9 @@ for opt, arg in opts:
         sys.exit()
     elif opt in ("-n", "--name"):
         name = arg
+
+with open('devices_list.txt') as f:
+    devices = f.read().splitlines()
 
 for device in devices:
     print('Starting configuration for ' + device)
