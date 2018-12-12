@@ -1,27 +1,36 @@
 #!/usr/bin/env python
 
-# File is part of task UC2
+# File is part of task UC4
 
 import json
 import requests
 import time
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+import common_data
+import sys
 
-headers = {
-    'Accept': "application/yang-data+json",
-    'Content-Type': "application/yang-data+json",
-    'Authorization': "Basic aW5zOmluc0BsYWI=",
-}
+# Read arguments
+if(len(sys.argv) < 3):
+    print('Usage: deploy_bgp_neighbor.py <router-id> <loopback-interface> <remote-asn>')
+    quit(2)
+r_id = sys.argv[1]
+lo_int = sys.argv[2]
+r_as = sys.argv[3]
 
-url = "https://sw03-pod-5.lab.ins.hsr.ch/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/" \
-      "with-vrf/ipv4=unicast"
+print(r_id + '\n' + lo_int + '\n' + r_as)
 
-with open('uc2_bgp_conf.json') as jsonfile:
-    payload = json.load(jsonfile)
+with open('data/devices_list.txt') as f:
+    devices = f.read().splitlines()
 
-print(payload)
-response = requests.request(
-    "PATCH", url, json=payload, headers=headers, verify=False)
+for device in devices:
+    print('Starting configuration for ' + device)
+    # Add BGP Neighbor
+    print('\n===============  Deploy BGP Neighbor  ==============\n')
 
-print(response.status_code)
+    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/neighbor"
+
+    with open('data/uc4_bgp_neighborship.json') as jsonfile:
+        payload = json.load(jsonfile)
+    payload['Cisco-IOS-XE-bgp:neighbor'][0]['id'] = r_id
+    payload['Cisco-IOS-XE-bgp:neighbor'][0]['remote-as'] = r_as
+    payload['Cisco-IOS-XE-bgp:neighbor'][0]['update-source']['Loopback'] = lo_int
+    print(payload)
