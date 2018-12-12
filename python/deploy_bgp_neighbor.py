@@ -4,14 +4,32 @@
 
 import requests, json, time, sys
 import common_data
+import getopt
 
 # Read arguments
-if(len(sys.argv) < 3):
-    print('Usage: deploy_bgp_neighbor.py <router-id> <loopback-interface> <remote-asn>')
-    quit(2)
-r_id = sys.argv[1]
-lo_int = sys.argv[2]
-r_as = sys.argv[3]
+r_id = ''
+lo_int = ''
+r_as = ''
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "hi:l:r:", ["r_id=", "lo_int=", "r_as="])
+except getopt.GetoptError:
+    print 'usage: deploy_bgp_neighbor.py -i <r_id> -l <lo_int> -r <r_as>'
+    sys.exit(2)
+for opt, arg in opts:
+    if opt == '-h':
+        print 'usage: deploy_bgp_neighbor.py -i <r_id> -l <lo_int> -r <r_as>'
+        sys.exit()
+    elif opt in ("-i", "--r_id"):
+        r_id = arg
+    elif opt in ("-l", "--lo_int"):
+        lo_int = arg
+    elif opt in ("-r", "--r_as"):
+        r_as = arg
+
+print(r_id)
+print(lo_int)
+print(r_as)
 
 # Begin configuration for each device read in devices_list
 with open('data/devices_list.txt') as f:
@@ -52,5 +70,5 @@ for device in devices:
                                 "vpnv6=unicast/vpnv6-unicast/neighbor"
     time.sleep(7)
     response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
-    
+
     common_data.printApiResponse(response)
