@@ -27,6 +27,10 @@ for opt, arg in opts:
     elif opt in ("-r", "--r_as"):
         r_as = arg
 
+if r_id == '' or lo_int == '' or r_as == '':
+    print 'Please use the correct arguments. Use option -h for help.'
+    sys.exit
+
 # Begin configuration for each device read in devices_list
 with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()

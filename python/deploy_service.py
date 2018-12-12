@@ -7,7 +7,7 @@ import common_data
 import getopt
 
 # Read arguments
-name= ''
+name = ''
 rd = ''
 asn_ip = ''
 description = ''
@@ -29,6 +29,10 @@ for opt, arg in opts:
         asn_ip = arg
     elif opt in ("-d", "--description"):
         description = arg
+
+if name == '' or rd == '' or asn_ip == '' or description == '':
+    print 'Please use the correct arguments. Use option -h for help.'
+    sys.exit
 
 with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()

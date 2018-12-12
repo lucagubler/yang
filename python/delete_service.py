@@ -21,6 +21,10 @@ for opt, arg in opts:
     elif opt in ("-n", "--name"):
         name = arg
 
+if name == '':
+    print 'Please use the correct arguments. Use option -h for help.'
+    sys.exit
+
 with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()
 
