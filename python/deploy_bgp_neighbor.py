@@ -4,6 +4,7 @@
 
 import requests, json, time, sys
 import common_data
+import getopt
 
 # Read arguments
 r_id = ''
@@ -17,7 +18,7 @@ except getopt.GetoptError:
     sys.exit(2)
 for opt, arg in opts:
     if opt == '-h':
-        print 'usage: delete_service.py -n <name>'
+        print 'usage: delete_service.py -i <r_id> -l <lo_int> -r <r_as>'
         sys.exit()
     elif opt in ("-i", "--r_id"):
         r_id = arg
@@ -25,6 +26,10 @@ for opt, arg in opts:
         lo_int = arg
     elif opt in ("-r", "--r_as"):
         r_as = arg
+
+print(r_id)
+print(lo_int)
+print(r_as)
 
 # Begin configuration for each device read in devices_list
 with open('data/devices_list.txt') as f:
@@ -65,5 +70,5 @@ for device in devices:
                                 "vpnv6=unicast/vpnv6-unicast/neighbor"
     time.sleep(7)
     response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
-    
+
     common_data.printApiResponse(response)
