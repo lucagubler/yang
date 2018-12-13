@@ -2,12 +2,10 @@
 
 # File is part of task UC1
 
-import requests
-import json
+import requests, json
 import common_data
 
-
-
+# Begin read for each device read in devices_list
 with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()
 
@@ -19,12 +17,25 @@ for device in devices:
     common_data.printApiResponse(response)
     data = response.json()
     print('\n================  Print VRF Config  ================\n')
-    print('#\tVRF Name\n---------------------------')
+    print('#  VRF\t\t\tRD\t\tRoute-Target' \
+    '\n----------------------------------------------------------')
     i = 1
     for value in data['Cisco-IOS-XE-native:vrf']['definition']:
         name = value['name']
         
-        print(str(i) + '\t' + name)
+        try:
+            rd = value['rd']
+        except:
+            rd = ''
+
+        try:
+            asn_import = value['route-target']['import'][0]['asn-ip']
+            asn_export = value['route-target']['export'][0]['asn-ip']
+            asn = 'I: ' + asn_import + ' E: ' + asn_export
+        except:
+            asn = ''
+
+        print(str(i) + '  ' + name + '\t\t' + rd + '\t' + asn)
         i = i + 1
     
     print('\n')
