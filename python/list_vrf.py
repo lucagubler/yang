@@ -2,7 +2,8 @@
 
 # File is part of task UC1
 
-import requests, json
+import requests
+import json
 import common_data
 
 

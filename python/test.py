@@ -7,30 +7,53 @@ import requests
 import time
 import common_data
 import sys
+import getopt
 
-# Read arguments
-if(len(sys.argv) < 3):
-    print('Usage: deploy_bgp_neighbor.py <router-id> <loopback-interface> <remote-asn>')
-    quit(2)
-r_id = sys.argv[1]
-lo_int = sys.argv[2]
-r_as = sys.argv[3]
+name = ''
+rd = ''
+asn_ip = ''
+description = ''
 
-print(r_id + '\n' + lo_int + '\n' + r_as)
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "hn:r:a:d:", ["name=", "rd=", "asn_ip=", "description="])
+except getopt.GetoptError:
+    print 'usage: deploy_service.py -n <vrf-name> -r <rd> -a <asn-ip> -d <description>'
+    sys.exit(2)
+for opt, arg in opts:
+    if opt == '-h':
+        print 'usage: deploy_service.py -n <vrf-name> -r <rd> -a <asn-ip> -d <description>'
+        sys.exit()
+    elif opt in ("-n", "--name"):
+        name = arg
+    elif opt in ("-r", "--rd"):
+        rd = arg
+    elif opt in ("-a", "--asn_ip"):
+        asn_ip = arg
+    elif opt in ("-d", "--description"):
+        description = arg
 
-with open('data/devices_list.txt') as f:
-    devices = f.read().splitlines()
+if name == '' or rd == '' or asn_ip == '':
+    print 'Please use the correct arguments. Use option -h for help.'
+    sys.exit
 
-for device in devices:
-    print('Starting configuration for ' + device)
-    # Add BGP Neighbor
-    print('\n===============  Deploy BGP Neighbor  ==============\n')
+print name
+print rd
+print asn_ip
+print description
 
-    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/neighbor"
-
-    with open('data/uc4_bgp_neighborship.json') as jsonfile:
-        payload = json.load(jsonfile)
-    payload['Cisco-IOS-XE-bgp:neighbor'][0]['id'] = r_id
-    payload['Cisco-IOS-XE-bgp:neighbor'][0]['remote-as'] = r_as
-    payload['Cisco-IOS-XE-bgp:neighbor'][0]['update-source']['Loopback'] = lo_int
-    print(payload)
+# with open('data/devices_list.txt') as f:
+#     devices = f.read().splitlines()
+#
+# for device in devices:
+#     print('Starting configuration for ' + device)
+#     # Add BGP Neighbor
+#     print('\n===============  Deploy BGP Neighbor  ==============\n')
+#
+#     url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/neighbor"
+#
+#     with open('data/uc4_bgp_neighborship.json') as jsonfile:
+#         payload = json.load(jsonfile)
+#     payload['Cisco-IOS-XE-bgp:neighbor'][0]['id'] = r_id
+#     payload['Cisco-IOS-XE-bgp:neighbor'][0]['remote-as'] = r_as
+#     payload['Cisco-IOS-XE-bgp:neighbor'][0]['update-source']['Loopback'] = lo_int
+#     print(payload)

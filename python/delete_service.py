@@ -2,7 +2,10 @@
 
 # File is part of task UC3
 
-import requests, json, time, sys
+import requests
+import json
+import time
+import sys
 import common_data
 import getopt
 
