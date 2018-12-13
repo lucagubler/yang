@@ -1,2 +1,2 @@
-sw04-pod-4.lab.ins.hsr.ch
-sw03-pod-4.lab.ins.hsr.ch
+sw03-pod-9.lab.ins.hsr.ch
+sw04-pod-9.lab.ins.hsr.ch
