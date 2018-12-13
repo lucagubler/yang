@@ -2,12 +2,8 @@
 
 # File is part of task UC3
 
-import requests
-import json
-import time
-import sys
+import requests, json, time, sys, getopt
 import common_data
-import getopt
 
 # Read arguments
 name = ''
@@ -16,18 +12,19 @@ try:
     opts, args = getopt.getopt(sys.argv[1:], "hn:", ["name="])
 except getopt.GetoptError:
     print 'usage: delete_service.py -n <name>'
-    sys.exit(2)
+    sys.exit(5)
 for opt, arg in opts:
     if opt == '-h':
-        print 'usage: delete_service.py -n <name>'
+        print'usage: delete_service.py -n <name>'
         sys.exit()
     elif opt in ("-n", "--name"):
         name = arg
 
 if name == '':
-    print 'Please use the correct arguments. Use option -h for help.'
-    sys.exit
+    print('Missing arguments. Use option -h for help.')
+    sys.exit(3)
 
+# Begin configuration for each device read in devices_list
 with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()
 

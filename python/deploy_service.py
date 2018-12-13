@@ -2,12 +2,8 @@
 
 # File is part of task UC2
 
-import requests
-import json
-import time
-import sys
+import requests, json, time, sys, getopt
 import common_data
-import getopt
 
 # Read arguments
 name = ''
@@ -18,11 +14,11 @@ description = ''
 try:
     opts, args = getopt.getopt(sys.argv[1:], "hn:r:a:d:", ["name=", "rd=", "asn_ip=", "description="])
 except getopt.GetoptError:
-    print 'usage: deploy_service.py -n <vrf-name> -r <rd> -a <asn-ip> -d <description>'
-    sys.exit(2)
+    print('usage: deploy_service.py -n <vrf-name> -r <rd> -a <asn-ip> -d <description>')
+    sys.exit(5)
 for opt, arg in opts:
     if opt == '-h':
-        print 'usage: deploy_service.py -n <vrf-name> -r <rd> -a <asn-ip> -d <description>'
+        print('usage: deploy_service.py -n <vrf-name> -r <rd> -a <asn-ip> -d <description>')
         sys.exit()
     elif opt in ("-n", "--name"):
         name = arg
@@ -34,9 +30,10 @@ for opt, arg in opts:
         description = arg
 
 if name == '' or rd == '' or asn_ip == '' or description == '':
-    print 'Please use the correct arguments. Use option -h for help.'
-    sys.exit
+    print('Missing arguments. Use option -h for help.')
+    sys.exit(3)
 
+# Begin configuration for each device read in devices_list
 with open('data/devices_list.txt') as f:
     devices = f.read().splitlines()
 

@@ -2,12 +2,8 @@
 
 # File is part of task UC4
 
-import requests
-import json
-import time
-import sys
+import requests, json, time, sys, getopt
 import common_data
-import getopt
 
 # Read arguments
 r_id = ''
@@ -17,11 +13,11 @@ r_as = ''
 try:
     opts, args = getopt.getopt(sys.argv[1:], "hi:l:r:", ["r_id=", "lo_int=", "r_as="])
 except getopt.GetoptError:
-    print 'usage: deploy_bgp_neighbor.py -i <r_id> -l <lo_int> -r <r_as>'
-    sys.exit(2)
+    print('usage: deploy_bgp_neighbor.py -i <router_id> -l <loopback_interface-#> -r <remote_as>')
+    sys.exit(5)
 for opt, arg in opts:
     if opt == '-h':
-        print 'usage: deploy_bgp_neighbor.py -i <r_id> -l <lo_int> -r <r_as>'
+        print('usage: deploy_bgp_neighbor.py -i <router_id> -l <loopback_interface-#> -r <remote_as>')
         sys.exit()
     elif opt in ("-i", "--r_id"):
         r_id = arg
@@ -31,8 +27,8 @@ for opt, arg in opts:
         r_as = arg
 
 if r_id == '' or lo_int == '' or r_as == '':
-    print 'Please use the correct arguments. Use option -h for help.'
-    sys.exit
+    print('Missing arguments. Use option -h for help.')
+    sys.exit(3)
 
 # Begin configuration for each device read in devices_list
 with open('data/devices_list.txt') as f:
