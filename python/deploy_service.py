@@ -2,7 +2,11 @@
 
 # File is part of task UC2
 
-import requests, json, time, sys, getopt
+import requests
+import json
+import time
+import sys
+import getopt
 import common_data
 
 # Read arguments
@@ -12,7 +16,8 @@ asn_ip = ''
 description = ''
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "hn:r:a:d:", ["name=", "rd=", "asn_ip=", "description="])
+    opts, args = getopt.getopt(sys.argv[1:], "hn:r:a:d:", [
+                               "name=", "rd=", "asn_ip=", "description="])
 except getopt.GetoptError:
     print('usage: deploy_service.py -n <vrf-name> -r <rd> -a <asn-ip> -d <description>')
     sys.exit(5)
@@ -41,7 +46,7 @@ for device in devices:
     print('Starting configuration for ' + device)
     # First deploy VRF
     print('\n===============  Deploy VRF Config  ===============\n')
-    
+
     url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/vrf"
 
     with open('data/uc2_vrf_conf.json') as jsonfile:
@@ -54,21 +59,23 @@ for device in devices:
     payload['Cisco-IOS-XE-native:vrf']['definition'][0]['route-target']['import'][0]['asn-ip'] = asn_ip
 
     time.sleep(7)
-    response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
+    response = requests.request(
+        "PATCH", url, json=payload, headers=common_data.headers, verify=False)
 
     common_data.printApiResponse(response)
 
     # Secondly deploy BGP configuration for VRF
     print('\n===============  Deploy BGP Config  ===============\n')
 
-    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/" \
-                                "ipv4=unicast"
+    url = "https://" + device + \
+        "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/with-vrf/ipv4=unicast"
 
     with open('data/uc2_bgp_conf.json') as jsonfile:
         payload = json.load(jsonfile)
     payload['Cisco-IOS-XE-bgp:ipv4']['vrf'][0]['name'] = name
 
     time.sleep(7)
-    response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
+    response = requests.request(
+        "PATCH", url, json=payload, headers=common_data.headers, verify=False)
 
     common_data.printApiResponse(response)

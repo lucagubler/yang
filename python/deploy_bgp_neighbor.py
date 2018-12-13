@@ -2,7 +2,11 @@
 
 # File is part of task UC4
 
-import requests, json, time, sys, getopt
+import requests
+import json
+import time
+import sys
+import getopt
 import common_data
 
 # Read arguments
@@ -11,7 +15,8 @@ lo_int = ''
 r_as = ''
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "hi:l:r:", ["r_id=", "lo_int=", "r_as="])
+    opts, args = getopt.getopt(sys.argv[1:], "hi:l:r:", [
+                               "r_id=", "lo_int=", "r_as="])
 except getopt.GetoptError:
     print('usage: deploy_bgp_neighbor.py -i <router_id> -l <loopback_interface-#> -r <remote_as>')
     sys.exit(5)
@@ -39,7 +44,8 @@ for device in devices:
     # Add BGP Neighbor
     print('\n===============  Deploy BGP Neighbor  ==============\n')
 
-    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/neighbor"
+    url = "https://" + device + \
+        "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/neighbor"
 
     # Read template json
     with open('data/uc4_bgp_neighborship.json') as jsonfile:
@@ -51,14 +57,15 @@ for device in devices:
     payload['Cisco-IOS-XE-bgp:neighbor'][0]['remote-as'] = r_as
 
     time.sleep(7)
-    response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
+    response = requests.request(
+        "PATCH", url, json=payload, headers=common_data.headers, verify=False)
 
     common_data.printApiResponse(response)
 
     # Add new neighbor to VPNv* configuration
     print('\n===============  Add VPNv* Configuration  ==============\n')
-    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/no-vrf/" \
-                                "vpnv4=unicast/vpnv4-unicast/neighbor"
+    url = "https://" + device + \
+        "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/no-vrf/vpnv4=unicast/vpnv4-unicast/neighbor"
 
     with open('data/uc4_bgp_neighborship_vpn.json') as jsonfile:
         payload = json.load(jsonfile)
@@ -66,13 +73,15 @@ for device in devices:
     payload['Cisco-IOS-XE-bgp:neighbor'][0]['id'] = r_id
 
     time.sleep(7)
-    response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
+    response = requests.request(
+        "PATCH", url, json=payload, headers=common_data.headers, verify=False)
 
     common_data.printApiResponse(response)
 
-    url = "https://" + device + "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/no-vrf/" \
-                                "vpnv6=unicast/vpnv6-unicast/neighbor"
+    url = "https://" + device + \
+        "/restconf/data/Cisco-IOS-XE-native:native/router/bgp=65000/address-family/no-vrf/vpnv6=unicast/vpnv6-unicast/neighbor"
     time.sleep(7)
-    response = requests.request("PATCH", url, json=payload, headers=common_data.headers, verify=False)
+    response = requests.request(
+        "PATCH", url, json=payload, headers=common_data.headers, verify=False)
 
     common_data.printApiResponse(response)
