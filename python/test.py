@@ -40,6 +40,7 @@ print name
 print rd
 print asn_ip
 print description
+print(len(sys.argv))
 
 # with open('data/devices_list.txt') as f:
 #     devices = f.read().splitlines()
